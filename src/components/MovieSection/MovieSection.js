@@ -22,13 +22,9 @@ class MovieSection extends Component {
     }
 
     render() {
-        let peliculasAMostrar = [];
-
-        if (this.state.peliculas) {
-            for (let i = 0; i < 4; i++) {
-                peliculasAMostrar.push(this.state.peliculas[i]);
-            }
-        }
+        let peliculasAMostrar = this.state.peliculas
+            ? this.state.peliculas.filter((pelicula, indice) => indice < 4)
+            : [];
         return (
             <>
                 <h2 className="alert alert-primary">{this.props.titulo}</h2>

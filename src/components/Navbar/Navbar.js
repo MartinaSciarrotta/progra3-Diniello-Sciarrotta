@@ -21,16 +21,18 @@ function Navbar () {
                     <Link className="nav-link" to="/peliculas/now_playing">En cartel</Link>
                 </li>   
 
-                {!haySesion &&
-                    <li className="nav-item ml-auto">
+                {!haySesion
+                    ? <li className="nav-item ml-auto">
                         <Link className="nav-link" to="/registro">Registro</Link>
                     </li>
+                    : ''
                 }
 
-                {!haySesion &&
-                    <li className="nav-item">
+                {!haySesion
+                    ? <li className="nav-item">
                         <Link className="nav-link" to="/login">Login</Link>
                     </li>
+                    : ''
                 }
 
             </ul>

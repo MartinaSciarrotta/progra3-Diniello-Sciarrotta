@@ -16,7 +16,7 @@ class SearchForm extends Component{
 
     controlarCambios(event){
         this.setState({
-            texto: event.targer.value,
+            texto: event.target.value,
         });
     }
 

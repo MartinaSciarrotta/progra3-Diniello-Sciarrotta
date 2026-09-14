@@ -32,13 +32,14 @@ class MovieCard extends Component {
                 <div className="cardBody"> 
                     <h5 className='card-title'>{pelicula.title}</h5>
 
-                    {this.state.mostrarDescripcion &&
-                        <p className='card-text'>{pelicula.overview}</p>
+                    {this.state.mostrarDescripcion
+                        ? <p className='card-text'>{pelicula.overview}</p>
+                        : ''
                     }
 
                     <button
                         className='btn btn-secondary'
-                        onClick={() => this.alternarDEscripcion()}
+                        onClick={() => this.alternarDescripcion()}
                     >
                         Ver descripcion
                     </button>
@@ -47,8 +48,9 @@ class MovieCard extends Component {
                         Ir a detalle
                     </Link>
 
-                    {haySesion &&
-                        <button className='btn alert-primary'>Favorito</button>
+                    {haySesion
+                        ? <button className='btn alert-primary'>Favorito</button>
+                        : ''
                     }
 
                 </div>

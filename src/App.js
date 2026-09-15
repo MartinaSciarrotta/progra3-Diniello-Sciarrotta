@@ -19,8 +19,8 @@ function App() {
           <Route path="/registro" exact={true} component={CreateAccount} />
           <Route path="/login" exact={true} component={Login} />
           <Route path="/" exact={true} component={Home} />
+          <Route path="/peliculas/:endpoint" exact={true} component={Movies} />
           <Route path="" component={Error} />
-          <Route path="/peliculas/:endpoint" exact={true} component={Movies} /> 
         </Switch>
       </main>
 

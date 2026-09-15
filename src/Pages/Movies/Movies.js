@@ -61,13 +61,14 @@ class Movies extends Component {
                         onChange={(event) => this.controlarFiltro(event)}
                     />
                 </form>
-                <button className="btn btn-info" onClick={() => this.cargarMas()}>Cargar Mas</button>
-
+                
                 <section className="row cards all-movies">
                     {peliculasFiltradas.map(pelicula => (
                         <MovieCard key={pelicula.id} pelicula={pelicula} />
                     ))}
                 </section>
+
+                <button className="btn btn-info" onClick={() => this.cargarMas()}>Cargar Mas</button>
 
             </div>
         );

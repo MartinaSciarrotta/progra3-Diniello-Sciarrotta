@@ -8,11 +8,11 @@ function Home () {
         <div className="container">
             <SearchForm />
             <MovieSection
-                titulo="Popular movies this week"
+                titulo="Películas más vistas esta semana"
                 endpoint="popular"
             />
             <MovieSection
-                titulo="Movie now playing"
+                titulo="Películas en cartelera"
                 endpoint="now_playing"
             />
         </div>

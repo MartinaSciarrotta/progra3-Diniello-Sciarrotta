@@ -5,7 +5,7 @@ const API_KEY = "44409d458b80c6cd77fa1ee8e33830c6";
 
 const cookies = new Cookies();
 
-class MovieDetail extends Component {
+class SerieDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -16,12 +16,12 @@ class MovieDetail extends Component {
 
     componentDidMount() {
         let id = this.props.match.params.id;
-        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=es-AR`)
+        fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=es-AR`)
             .then(response => response.json())
             .then(data => {
-                this.setState({ pelicula: data });
+                this.setState({ serie: data });
 
-                let storage = JSON.parse(localStorage.getItem("favoritos-peliculas"));
+                let storage = JSON.parse(localStorage.getItem("favoritos-series"));
                 if (storage !== null) {
                     this.setState({esFavorito: storage.includes(data.id)});
                 }
@@ -30,49 +30,49 @@ class MovieDetail extends Component {
     }
 
     agregarFav() {
-        let storage = JSON.parse(localStorage.getItem("favoritos-peliculas"));
+        let storage = JSON.parse(localStorage.getItem("favoritos-series"));
 
         if (storage !== null) {
-            storage.push(this.state.pelicula.id)
+            storage.push(this.state.serie.id)
         } else {
-            storage = [this.state.pelicula.id];
+            storage = [this.state.serie.id];
         }
 
-        localStorage.setItem("favoritos-peliculas", JSON.stringify(storage));
+        localStorage.setItem("favoritos-series", JSON.stringify(storage));
         this.setState({ esFavorito: true });
     }
 
     sacarFav() {
-        let storage = JSON.parse(localStorage.getItem("favoritos-peliculas"));
-        let storageFiltrado = storage.filter((id) => id !== this.state.pelicula.id);
+        let storage = JSON.parse(localStorage.getItem("favoritos-series"));
+        let storageFiltrado = storage.filter((id) => id !== this.state.serie.id);
 
-        localStorage.setItem("favoritos-peliculas", JSON.stringify(storageFiltrado));
+        localStorage.setItem("favoritos-series", JSON.stringify(storageFiltrado));
         this.setState({ esFavorito: false });
     }
 
     render() {
-        let pelicula = this.state.pelicula;
+        let serie = this.state.serie;
         let haySesion = cookies.get("user-auth-cookie");
 
         return (
             <div className="container">
-                {pelicula === null
+                {serie === null
                     ? <p>Cargando... </p>
                     : (
                         <section className="row">
                             <img
                                 className="col-md-6"
-                                src={`https://image.tmdb.org/t/p/w500/${pelicula.poster_path}`}
-                                alt="{pelicula.title}"
+                                src={`https://image.tmdb.org/t/p/w500/${serie.poster_path}`}
+                                alt="{serie.title}"
                             />
                             <section className="col-md-6 info">
-                                <h2 className="alert alert-primary"> {pelicula.title} </h2>
-                                <p> <strong>Clasificacion: </strong> {pelicula.vote_average} </p>
-                                <p> <strong>Fecha de estreno: </strong> {pelicula.release_date} </p>
-                                <p> <strong>Duracion: </strong> {pelicula.runetime} minutos </p>
-                                <p> <strong>Sinopsis: </strong> {pelicula.overview} </p>
+                                <h2 className="alert alert-primary"> {serie.name} </h2>
+                                <p> <strong>Clasificacion: </strong> {serie.vote_average} </p>
+                                <p> <strong>Fecha de estreno: </strong> {serie.first_air_date} </p>
+                                <p> <strong>Temporadas: </strong> {serie.number_of_seasons} </p>
+                                <p> <strong>Sinopsis: </strong> {serie.overview} </p>
                                 <p> <strong>Genero: </strong>
-                                    {pelicula.genres.map(genero => (
+                                    {serie.genres.map(genero => (
                                         <span key={genero.id}>{genero.name} </span>
                                     ))}
                                 </p>
@@ -82,7 +82,7 @@ class MovieDetail extends Component {
                                         ? <button className="btn btn-primary" onClick={() => this.sacarFav()}>Sacar de Favoritos</button>
                                         : <button className="btn btn-primary" onClick={() => this.agregarFav()}>Agregar a Favoritos</button>
                                     )
-                                       
+                                    
                                     : ''
                                 }
                             </section>
@@ -95,4 +95,4 @@ class MovieDetail extends Component {
 
 }
 
-export default MovieDetail;
+export default SerieDetail;

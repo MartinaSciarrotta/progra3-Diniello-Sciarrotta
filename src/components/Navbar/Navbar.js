@@ -15,11 +15,25 @@ function Navbar () {
                     <Link className="nav-link" to="/">Home</Link>
                 </li> 
                 <li className="nav-item">
-                    <Link className="nav-link" to="/peliculas/popular">Películas populares</Link>
+                    <Link className="nav-link" to="/peliculas/popular">Películas</Link>
                 </li> 
                 <li className="nav-item">
-                    <Link className="nav-link" to="/peliculas/now_playing">En cartel</Link>
+                    <Link className="nav-link" to="/peliculas/now_playing">Películas en cartelera</Link>
                 </li>   
+                <li className="nav-item">
+                    <Link className="nav-link" to="/series/popular">Series</Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/series/on_the_air">Series en emisión</Link>
+                </li>
+
+                {haySesion 
+                    ? <li className="nav-item">
+                        <Link className="nav-link" to="/favoritos">Favoritos</Link>
+                    </li>
+                    : ''
+
+                }
 
                 {!haySesion
                     ? <li className="nav-item ml-auto">

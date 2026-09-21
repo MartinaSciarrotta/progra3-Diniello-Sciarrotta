@@ -43,6 +43,11 @@ class FormLogin extends Component {
             return;
         }
 
+        if (usuarioEncontrado[0].password !== this.state.password){
+            this.setState({error: "Usuario o contraseña incorrectos"});
+            return;
+        }
+
         cookies.set('user-auth-cookie', usuarioEncontrado[0].email);  
 
         this.props.history.push("/");

@@ -23,16 +23,21 @@ class Favoritos extends Component {
             return;
         }
 
+        // Películas
         let storagePeliculas = JSON.parse(localStorage.getItem("favoritos-peliculas"));
 
-        if (storagePeliculas !== null && storagePeliculas.length > 0) {
+        if (storagePeliculas === null) {
+            storagePeliculas = [];
+        }
+
+        if (storagePeliculas.length > 0) {
             let peliculasRecuperadas = [];
 
             storagePeliculas.map((id) => {
                 fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=es-AR`)
                     .then(response => response.json())
                     .then(data => {
-                        peliculasRecuperadas = peliculasRecuperadas.concat(data);
+                        peliculasRecuperadas.push(data);
                         this.setState({ peliculas: peliculasRecuperadas });
                     })
                     .catch(error => console.log("El error fue: " + error));
@@ -41,15 +46,22 @@ class Favoritos extends Component {
             this.setState({ peliculas: [] });
         }
 
+
+        // Series
         let storageSeries = JSON.parse(localStorage.getItem("favoritos-series"));
-        if (storageSeries !== null && storageSeries.length > 0) {
+
+        if (storageSeries === null) {
+            storageSeries = [];
+        }
+
+        if (storageSeries.length > 0) {
             let seriesRecuperadas = [];
 
             storageSeries.map((id) => {
                 fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=es-AR`)
                     .then(response => response.json())
                     .then(data => {
-                        seriesRecuperadas = seriesRecuperadas.concat(data);
+                        seriesRecuperadas.push(data);
                         this.setState({ series: seriesRecuperadas });
                     })
                     .catch(error => console.log("El error fue: " + error));
@@ -61,12 +73,12 @@ class Favoritos extends Component {
 
     quitarPelicula(id) {
         let peliculasFiltradas = this.state.peliculas.filter(pelicula => pelicula.id !== id);
-        this.setState({peliculas: peliculasFiltradas});
+        this.setState({ peliculas: peliculasFiltradas });
     }
 
     quitarSerie(id) {
-        let seriesFiltradas = this.state.series.filter (serie => serie.id !== id);
-        this.setState({series: seriesFiltradas});
+        let seriesFiltradas = this.state.series.filter(serie => serie.id !== id);
+        this.setState({ series: seriesFiltradas });
     }
 
     render() {
@@ -105,7 +117,7 @@ class Favoritos extends Component {
                                     return (
                                         <SerieCard
                                             key={serie.id}
-                                            pelicula={serie}
+                                            serie={serie}
                                             alSacarFav={() => this.quitarSerie(serie.id)}
                                         />
                                     );

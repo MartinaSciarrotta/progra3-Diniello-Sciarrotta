@@ -46,6 +46,10 @@ class MovieCard extends Component {
 
         localStorage.setItem("favoritos-peliculas", JSON.stringify(storageFiltrado));
         this.setState({ esFavorito: false });
+
+        if (this.props.alSacarFav) {
+            this.props.alSacarFav();
+        }
     }
 
     render() {

@@ -10,6 +10,7 @@ class Resultados extends Component {
         this.state = {
             peliculas: null,
             series: null,
+            texto: this.props.match.params.texto,
         }
     }
 
@@ -17,9 +18,12 @@ class Resultados extends Component {
         this.buscar();
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.match.params.texto !== this.props.match.params.texto) {
-            this.setState({ peliculas: null, series: null }, () => this.buscar());
+    componentDidUpdate() {
+        if (this.state.texto !== this.props.match.params.texto) {
+            this.setState(
+                {texto: this.props.match.params.texto, peliculas: null, series: null},
+                () => this.buscar()
+            );
         }
     }
 

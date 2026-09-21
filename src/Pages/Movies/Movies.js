@@ -11,6 +11,7 @@ class Movies extends Component {
             pagina: 1,
             filtro: "",
             cargando: true,
+            endpoint: this.props.match.params.endpoint,
         }
     }
 
@@ -18,10 +19,11 @@ class Movies extends Component {
         this.buscarPeliculas(1);
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps.match.params.endpoint !== this.props.match.params.endpoint) {
-            this.setState({ peliculas: [], pagina: 1, cargando: true });
-            this.buscarPeliculas(1);
+    componentDidUpdate() {
+        if (this.state.endpoint !== this.props.match.params.endpoint) {
+            this.setState({ endpoint: this.props.match.params.endpoint, peliculas: [], pagina: 1, cargando: true },
+                () => this.buscarPeliculas(1)
+            );
         }
     }
 
@@ -30,8 +32,10 @@ class Movies extends Component {
         fetch(`https://api.themoviedb.org/3/movie/${endpoint}?api_key=${API_KEY}&language=es-AR&page=${pagina}`)
             .then(response => response.json())
             .then(data => {
+                let peliculasAcumuladas = this.state.peliculas;
+                data.results.map(pelicula => peliculasAcumuladas.push(pelicula));
                 this.setState({
-                    peliculas: [...this.state.peliculas, ...data.results],
+                    peliculas: peliculasAcumuladas,
                     pagina: pagina,
                     cargando: false,
                 });
@@ -51,6 +55,7 @@ class Movies extends Component {
         let peliculasFiltradas = this.state.peliculas.filter(pelicula =>
             pelicula.title.toLowerCase().includes(this.state.filtro.toLowerCase())
         );
+
         return (
             <div className="container">
                 <h2 className="alert alert-primary">Todas las peliculas</h2>

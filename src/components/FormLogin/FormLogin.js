@@ -35,7 +35,7 @@ class FormLogin extends Component {
 
         let usuarioEncontrado = usersParseado.filter (function (user) {
             return user.email === this.state.email && user.password === this.state.password;
-        }.bind(this));
+        }.bind(this)); 
 
         if (usuarioEncontrado.length === 0) {
             this.setState({ error: "Usuario o contraseña incorrectos" });

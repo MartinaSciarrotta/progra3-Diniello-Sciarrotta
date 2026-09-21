@@ -7,7 +7,7 @@ const cookies = new Cookies();
 class Navbar extends Component {
 
     cerrarSesion() {
-        cookies.remove('user-auth-cookie', { path: '/' });
+        cookies.remove('user-auth-cookie');
         this.props.history.push("/");
     }
 

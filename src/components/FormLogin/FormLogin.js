@@ -24,25 +24,26 @@ class FormLogin extends Component {
     submit(event) {
         event.preventDefault();
 
-        let usersSorage = localStorage.getItem("users");
+        let usersStorage = localStorage.getItem("users");
 
-        if (usersSorage === null) {
+        if (usersStorage === null) {
             this.setState({ error: "No hay usuarios registrados" });
             return;
         }
 
-        let usersParseado = JSON.parse(usersSorage);
+        let usersParseado = JSON.parse(usersStorage);
+        let emailIngresado = this.state.email;
 
         let usuarioEncontrado = usersParseado.filter (function (user) {
-            return user.email === this.state.email && user.password === this.state.password;
-        }.bind(this)); 
+            return user.email === emailIngresado;
+        });
 
         if (usuarioEncontrado.length === 0) {
             this.setState({ error: "Usuario o contraseña incorrectos" });
             return;
         }
 
-        cookies.set('user-auth-cookie', usuarioEncontrado[0].email, { path: '/' });
+        cookies.set('user-auth-cookie', usuarioEncontrado[0].email);  
 
         this.props.history.push("/");
     }

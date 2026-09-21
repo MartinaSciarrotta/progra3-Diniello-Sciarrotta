@@ -28,7 +28,7 @@ class Favoritos extends Component {
         if (storagePeliculas !== null && storagePeliculas.length > 0) {
             let peliculasRecuperadas = [];
 
-            storagePeliculas.forEach((id) => {
+            storagePeliculas.map((id) => {
                 fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=es-AR`)
                     .then(response => response.json())
                     .then(data => {
@@ -45,7 +45,7 @@ class Favoritos extends Component {
         if (storageSeries !== null && storageSeries.length > 0) {
             let seriesRecuperadas = [];
 
-            storageSeries.forEach((id) => {
+            storageSeries.map((id) => {
                 fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=es-AR`)
                     .then(response => response.json())
                     .then(data => {

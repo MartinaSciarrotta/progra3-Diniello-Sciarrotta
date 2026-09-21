@@ -9,7 +9,7 @@ class SerieDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            pelicula: null,
+            serie: null,
             esFavorito: null,
         }
     }
@@ -63,7 +63,7 @@ class SerieDetail extends Component {
                             <img
                                 className="col-md-6"
                                 src={`https://image.tmdb.org/t/p/w500/${serie.poster_path}`}
-                                alt="{serie.title}"
+                                alt={serie.name}
                             />
                             <section className="col-md-6 info">
                                 <h2 className="alert alert-primary"> {serie.name} </h2>

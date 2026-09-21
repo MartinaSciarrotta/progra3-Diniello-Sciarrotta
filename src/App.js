@@ -1,5 +1,6 @@
 import React from "react";
 import Header from "./components/Header/Header.js";
+import Resultados from "./Pages/Resultados/Resultados.js";
 import CreateAccount from "./components/CreateAccount/CreateAccount.js";
 import Login from "./components/Login/Login.js";
 import Home from "./Pages/Home/Home.js";
@@ -31,7 +32,7 @@ function App() {
           <Route path="/series/:endpoint" component={Series} />
           <Route path="/serie/:id" component={SerieDetail} />
 
-          {/* acá iría resultados de la búsqueda */}
+          <Route path="/buscar/:texto" component={Resultados} />
 
           <Route path="/favoritos" component={Favoritos}/>
 

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SeriesCard from "../SeriesCard/SeriesCard.js";
+import SerieCard from "../SerieCard/SerieCard.js";
 import { Link } from "react-router-dom";
 
 const API_KEY = '44409d458b80c6cd77fa1ee8e33830c6';
@@ -23,7 +23,7 @@ class SeriesSection extends Component {
 
     render() {
         let seriesAMostrar = this.state.series
-            ? this.state.series.filter((serie, indice) => indice < 4)
+            ? this.state.series.filter((serie, indice) => indice < 5)
             : [];
         return (
             <>

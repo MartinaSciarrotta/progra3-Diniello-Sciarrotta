@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Cookies from "universal-cookie";
 import MovieCard from "../../components/MovieCard/MovieCard.js"
-import SeriesCard from "../../components/SeriesCard/SeriesCard.js"
+import SerieCard from "../../components/SerieCard/SerieCard.js"
 
 const API_KEY = "44409d458b80c6cd77fa1ee8e33830c6";
 
@@ -59,6 +59,16 @@ class Favoritos extends Component {
         }
     }
 
+    quitarPelicula(id) {
+        let peliculasFiltradas = this.state.peliculas.filter(pelicula => pelicula.id !== id);
+        this.setState({peliculas: peliculasFiltradas});
+    }
+
+    quitarSerie(id) {
+        let seriesFiltradas = this.state.series.filter (serie => serie.id !== id);
+        this.setState({series: seriesFiltradas});
+    }
+
     render() {
         return (
             <div>
@@ -75,6 +85,7 @@ class Favoritos extends Component {
                                         <MovieCard
                                             key={pelicula.id}
                                             pelicula={pelicula}
+                                            alSacarFav={() => this.quitarPelicula(pelicula.id)}
                                         />
                                     );
                                 })}
@@ -92,9 +103,10 @@ class Favoritos extends Component {
                             <section className="row cards">
                                 {this.state.series.map(serie => {
                                     return (
-                                        <SeriesCard
+                                        <SerieCard
                                             key={serie.id}
-                                            serie={serie}
+                                            pelicula={serie}
+                                            alSacarFav={() => this.quitarSerie(serie.id)}
                                         />
                                     );
                                 })}

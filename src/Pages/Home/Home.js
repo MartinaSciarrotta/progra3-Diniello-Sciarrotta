@@ -1,6 +1,7 @@
 import React from "react";
 import SearchForm from "../../components/SearchForm/SearchForm";
 import MovieSection from "../../components/MovieSection/MovieSection";
+import SeriesSection from "../../components/SeriesSection/SeriesSection";
 
 
 function Home () {
@@ -8,12 +9,12 @@ function Home () {
         <div className="container">
             <SearchForm />
             <MovieSection
-                titulo="Películas más vistas esta semana"
+                titulo="Top 5 películas"
                 endpoint="popular"
             />
-            <MovieSection
-                titulo="Películas en cartelera"
-                endpoint="now_playing"
+            <SeriesSection
+                titulo="Top 5 series"
+                endpoint="popular"
             />
         </div>
     );

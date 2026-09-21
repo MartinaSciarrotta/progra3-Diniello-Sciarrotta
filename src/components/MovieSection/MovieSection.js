@@ -23,7 +23,7 @@ class MovieSection extends Component {
 
     render() {
         let peliculasAMostrar = this.state.peliculas
-            ? this.state.peliculas.filter((pelicula, indice) => indice < 4)
+            ? this.state.peliculas.filter((pelicula, indice) => indice < 5)
             : [];
         return (
             <>

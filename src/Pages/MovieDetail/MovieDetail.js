@@ -63,13 +63,13 @@ class MovieDetail extends Component {
                             <img
                                 className="col-md-6"
                                 src={`https://image.tmdb.org/t/p/w500/${pelicula.poster_path}`}
-                                alt="{pelicula.title}"
+                                alt={pelicula.title}
                             />
                             <section className="col-md-6 info">
                                 <h2 className="alert alert-primary"> {pelicula.title} </h2>
                                 <p> <strong>Clasificacion: </strong> {pelicula.vote_average} </p>
                                 <p> <strong>Fecha de estreno: </strong> {pelicula.release_date} </p>
-                                <p> <strong>Duracion: </strong> {pelicula.runetime} minutos </p>
+                                <p> <strong>Duracion: </strong> {pelicula.runtime} minutos </p>
                                 <p> <strong>Sinopsis: </strong> {pelicula.overview} </p>
                                 <p> <strong>Genero: </strong>
                                     {pelicula.genres.map(genero => (

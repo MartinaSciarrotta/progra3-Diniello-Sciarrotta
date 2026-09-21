@@ -46,6 +46,10 @@ class SerieCard extends Component {
 
         localStorage.setItem("favoritos-series", JSON.stringify(storageFiltrado));
         this.setState({ esFavorito: false });
+
+        if(this.props.alSacarFav){
+            this.props.alSacarFav();
+        }
     }
 
     render() {

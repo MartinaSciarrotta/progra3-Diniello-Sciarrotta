@@ -10,6 +10,7 @@ class Movies extends Component {
             peliculas: [],
             pagina: 1,
             filtro: "",
+            cargando: true,
         }
     }
 
@@ -19,7 +20,7 @@ class Movies extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.match.params.endpoint !== this.props.match.params.endpoint) {
-            this.setState({ peliculas: [], pagina: 1 });
+            this.setState({ peliculas: [], pagina: 1, cargando: true });
             this.buscarPeliculas(1);
         }
     }
@@ -32,6 +33,7 @@ class Movies extends Component {
                 this.setState({
                     peliculas: [...this.state.peliculas, ...data.results],
                     pagina: pagina,
+                    cargando: false,
                 });
             })
             .catch(error => console.log("El error fue: " + error));
@@ -61,12 +63,17 @@ class Movies extends Component {
                         onChange={(event) => this.controlarFiltro(event)}
                     />
                 </form>
-                
-                <section className="row cards all-movies">
-                    {peliculasFiltradas.map(pelicula => (
-                        <MovieCard key={pelicula.id} pelicula={pelicula} />
-                    ))}
-                </section>
+
+                {this.state.cargando
+                    ? <p>Cargando...</p>
+                    : (
+                        <section className="row cards all-movies">
+                            {peliculasFiltradas.map(pelicula => (
+                                <MovieCard key={pelicula.id} pelicula={pelicula} />
+                            ))}
+                        </section>
+                    )
+                }
 
                 <button className="btn btn-info" onClick={() => this.cargarMas()}>Cargar Mas</button>
 

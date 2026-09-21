@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import SerieCard from "../../components/SeriesCard/SeriesCard.js";
+import SerieCard from "../../components/SerieCard/SerieCard.js";
 
 const API_KEY = "44409d458b80c6cd77fa1ee8e33830c6";
 
@@ -10,6 +10,7 @@ class Series extends Component {
             series: [],
             pagina: 1,
             filtro: "",
+            cargando: true,
         }
     }
 
@@ -32,6 +33,7 @@ class Series extends Component {
                 this.setState({
                     series: [...this.state.series, ...data.results],
                     pagina: pagina,
+                    cargando: false,
                 });
             })
             .catch(error => console.log("El error fue: " + error));
@@ -61,12 +63,16 @@ class Series extends Component {
                         onChange={(event) => this.controlarFiltro(event)}
                     />
                 </form>
-                
-                <section className="row cards all-movies">
-                    {seriesFiltradas.map(serie => (
-                        <SerieCard key={serie.id} serie={serie} />
-                    ))}
-                </section>
+                {this.state.cargando
+                    ? <p>Cargando...</p>
+                    : (
+                        <section className="row cards all-movies">
+                            {seriesFiltradas.map(serie => (
+                                <SerieCard key={serie.id} serie={serie} />
+                            ))}
+                        </section>
+                    )
+                }
 
                 <button className="btn btn-info" onClick={() => this.cargarMas()}>Cargar Mas</button>
 

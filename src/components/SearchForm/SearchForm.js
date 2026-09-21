@@ -6,6 +6,7 @@ class SearchForm extends Component{
         super(props);
         this.state = {
             texto: "",
+            tipo: "movie",
         }
     }
 
@@ -30,6 +31,7 @@ class SearchForm extends Component{
                     value={this.state.texto}
                     onChange={(event) => this.controlarCambios(event) }
                 />
+                
                 <button type='submit' className='btn btn-success btn-sm'>Buscar</button>
             </form>
         );

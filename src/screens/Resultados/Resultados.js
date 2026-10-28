@@ -1,91 +1,76 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import MovieCard from "../../components/MovieCard/MovieCard.js";
 import SerieCard from "../../components/SerieCard/SerieCard.js";
 
 const API_KEY = "44409d458b80c6cd77fa1ee8e33830c6";
 
-class Resultados extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            peliculas: null,
-            series: null,
-            texto: this.props.match.params.texto,
-        }
-    }
+function Resultados(props) {
+    // "texto" sale directo de props, ya no hace falta guardarlo en estado
+    // mismo que "endpoint" en Movies.js y Series.js
+    const texto = props.match.params.texto;
 
-    componentDidMount() {
-        this.buscar();
-    }
+    const [peliculas, setPeliculas] = useState(null);
+    const [series, setSeries] = useState(null);
 
-    componentDidUpdate() {
-        if (this.state.texto !== this.props.match.params.texto) {
-            this.setState(
-                {texto: this.props.match.params.texto, peliculas: null, series: null},
-                () => this.buscar()
-            );
-        }
-    }
-
-    buscar() {
-        let texto = this.props.match.params.texto;
-
-        fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=es-AR&query=${texto}`)
+    function buscar() {
+        fetch(`https://api.themoviedb.org/3/search/movie?api_key=APIKEY&language=es-AR&query={texto}`)
             .then(response => response.json())
             .then(data => {
-                this.setState({ peliculas: data.results });
+                setPeliculas(data.results);
             })
             .catch(error => console.log("El error fue: " + error));
 
-        fetch(`https://api.themoviedb.org/3/search/tv?api_key=${API_KEY}&language=es-AR&query=${texto}`)
+        fetch(`https://api.themoviedb.org/3/search/tv?api_key=APIKEY&language=es-AR&query={texto}`)
             .then(response => response.json())
             .then(data => {
-                this.setState({ series: data.results });
+                setSeries(data.results);
             })
             .catch(error => console.log("El error fue: " + error));
     }
 
-    render() {
-        let texto = this.props.match.params.texto;
+    // Reemplazo de componentDidMount + componentDidUpdate:
+    // corre al montar y cada vez que cambia "texto" (nueva búsqueda)
+    useEffect(() => {
+        setPeliculas(null);
+        setSeries(null);
+        buscar();
+    }, [texto]);
 
-        return (
-            <div className="container">
-                <h2 className="alert alert-primary">
-                    Resultados para: {texto}
-                </h2>
+    return (
+        <div className="container">
+            <h2 className="alert alert-primary">
+                Resultados para: {texto}
+            </h2>
 
-                <h3>Películas</h3>
-                {this.state.peliculas === null
-                    ? <p>Cargando películas...</p>
-                    : this.state.peliculas.length === 0
-                        ? <p>No se encontraron películas</p>
-                        : (
-                            <section className="row cards">
-                                {this.state.peliculas.map(pelicula => (
-                                    <MovieCard key={pelicula.id} pelicula={pelicula} />
-                                ))}
-                            </section>
-                        )
-                }
+            <h3>Películas</h3>
+            {peliculas === null
+                ? <p>Cargando películas...</p>
+                : peliculas.length === 0
+                    ? <p>No se encontraron películas</p>
+                    : (
+                        <section className="row cards">
+                            {peliculas.map(pelicula => (
+                                <MovieCard key={pelicula.id} pelicula={pelicula} />
+                            ))}
+                        </section>
+                    )
+            }
 
-                <h3>Series</h3>
-                {this.state.series === null
-                        ? <p>Cargando series...</p>
-                        : this.state.series.length === 0
-                            ? <p>No se encontraron series</p>
-                            : (
-                                <section className="row cards">
-                                    {this.state.series.map(serie => (
-                                        <SerieCard key={serie.id} serie={serie} />
-                                    ))}
-                                </section>
-                            )
-                    }
-
-            </div>
-        );
-
-    }
+            <h3>Series</h3>
+            {series === null
+                ? <p>Cargando series...</p>
+                : series.length === 0
+                    ? <p>No se encontraron series</p>
+                    : (
+                        <section className="row cards">
+                            {series.map(serie => (
+                                <SerieCard key={serie.id} serie={serie} />
+                            ))}
+                        </section>
+                    )
+            }
+        </div>
+    );
 }
 
 export default Resultados;

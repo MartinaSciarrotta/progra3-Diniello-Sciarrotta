@@ -5,8 +5,8 @@ import CreateAccount from "./components/CreateAccount/CreateAccount.js";
 import Login from "./components/Login/Login.js";
 import Home from "./screens/Home/Home.js";
 import Error from "./screens/Error/Error.js";
-import Movies from "./Screens/Movies/Movies.js";
-import MovieDetail from "./Screens/MovieDetail/MovieDetail.js";
+import Movies from "./screens/Movies/Movies.js";
+import MovieDetail from "./screens/MovieDetail/MovieDetail.js"
 import Series from "./screens/Series/Series.js";
 import SerieDetail from "./screens/SerieDetail/SerieDetail.js";
 import Favoritos from "./screens/Favoritos/Favoritos.js";

@@ -1,41 +1,38 @@
-import React, { Component } from "react"; 
-class FormRegister extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: "",
-            password: "",
-            error: "",
-        }
+import React, { useState } from "react";
+
+// Reemplazo la estructura de Class por una funcion
+function FormRegister(props) {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    function controlarEmail(event) {
+        setEmail(event.target.value);
     }
 
-    controlarEmail(event) {
-        this.setState({ email: event.target.value });
+    function controlarPassword(event) {
+        setPassword(event.target.value);
     }
 
-    controlarPassword(event) {
-        this.setState({ password: event.target.value });
-    }
-
-    submit(event) {
+    function submit(event) {
         event.preventDefault();
 
         let usuarioACrear = {
-            email: this.state.email,
-            password: this.state.password,
+            email: email,
+            password: password,
         };
 
-        if (!this.state.email.includes("@")) {
-            this.setState({ error: "El email ingresado no es válido" });
+        if (!email.includes("@")) {
+            setError("El email ingresado no es válido");
             return;
         }
 
-        if (this.state.password.length < 6) {
-            this.setState({ error: "La contraseña debe tener al menos 6 caracteres" });
+        if (password.length < 6) {
+            setError("La contraseña debe tener al menos 6 caracteres");
             return;
         }
 
-        let usersStorage = localStorage.getItem("users")
+        let usersStorage = localStorage.getItem("users");
 
         if (usersStorage !== null) {
             let usersParseado = JSON.parse(usersStorage);
@@ -44,7 +41,7 @@ class FormRegister extends Component {
             });
 
             if (usersFiltrado.length > 0) {
-                this.setState({ error: "Ya existe un usuario con ese email" });
+                setError("Ya existe un usuario con ese email");
                 return;
             } else {
                 usersParseado.push(usuarioACrear);
@@ -57,31 +54,29 @@ class FormRegister extends Component {
             localStorage.setItem("users", usersEnJson);
         }
 
-        this.props.history.push("/login");
+        props.history.push("/login");
     }
 
-    render(){
-        return (
-            <form onSubmit={(event) => this.submit(event)}>
-                <label>Email:</label>
-                <input
-                    type="email"
-                    value={this.state.email}
-                    onChange={(event) => this.controlarEmail(event)}
-                />
+    return (
+        <form onSubmit={(event) => submit(event)}>
+            <label>Email:</label>
+            <input
+                type="email"
+                value={email}
+                onChange={(event) => controlarEmail(event)}
+            />
 
-                <label>Password:</label>
-                <input
-                    type="password"
-                    value={this.state.password}
-                    onChange={(event) => this.controlarPassword(event)}
-                />
+            <label>Password:</label>
+            <input
+                type="password"
+                value={password}
+                onChange={(event) => controlarPassword(event)}
+            />
 
-                <input type="submit" value="Crear cuenta" className="btn btn-primary" />
-                {this.state.error === "" ? null : <p className="error">{this.state.error}</p>}
-            </form>
-        );
-    }
+            <input type="submit" value="Crear cuenta" className="btn btn-primary" />
+            {error === "" ? null : <p className="error">{error}</p>}
+        </form>
+    );
 }
 
 export default FormRegister;

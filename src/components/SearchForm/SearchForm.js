@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
-// Reemplazo la estructura de Class por una función
+// Reemplazo la estructura de Class por una funcion
 function SearchForm(props) {
     const [texto, setTexto] = useState("");
     const [tipo, setTipo] = useState("movie");
@@ -30,3 +30,4 @@ function SearchForm(props) {
 }
 
 export default withRouter(SearchForm);
+

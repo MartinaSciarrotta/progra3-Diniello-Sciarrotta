@@ -1,41 +1,32 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
-class SearchForm extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            texto: "",
-            tipo: "movie",
-        }
-    }
+// Reemplazo la estructura de Class por una función
+function SearchForm(props) {
+    const [texto, setTexto] = useState("");
+    const [tipo, setTipo] = useState("movie");
 
-    ejecutarBusqueda(event){
+    function ejecutarBusqueda(event) {
         event.preventDefault();
-        this.props.history.push("/buscar/" + this.state.texto);
+        props.history.push("/buscar/" + texto);
     }
 
-    controlarCambios(event){
-        this.setState({
-            texto: event.target.value,
-        });
+    function controlarCambios(event) {
+        setTexto(event.target.value);
     }
 
-    render(){
-        return (
-            <form className='search-form' onSubmit={(event) => this.ejecutarBusqueda(event) } >
-                <input
-                    type="text"
-                    name="searchData"
-                    placeholder='Buscar...'
-                    value={this.state.texto}
-                    onChange={(event) => this.controlarCambios(event) }
-                />
-                
-                <button type='submit' className='btn btn-success btn-sm'>Buscar</button>
-            </form>
-        );
-    }
+    return (
+        <form className='search-form' onSubmit={(event) => ejecutarBusqueda(event)}>
+            <input
+                type="text"
+                name="searchData"
+                placeholder='Buscar...'
+                value={texto}
+                onChange={(event) => controlarCambios(event)}
+            />
+            <button type='submit' className='btn btn-success btn-sm'>Buscar</button>
+        </form>
+    );
 }
 
 export default withRouter(SearchForm);
